@@ -27,8 +27,9 @@ product.showInfo = () =>
 }
 product.showInfo();
 
-for(pr in product)
+console.log("================================");
+for(const pr in product)
 {
-    console.log(`${product[pr]} - ${pe}`);
+    console.log(`${pr} - ${product[pr]}`);
 }
 
