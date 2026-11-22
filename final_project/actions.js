@@ -2,6 +2,7 @@ import readlineSync from 'readline-sync';
 import {Task, createIdCounter} from "./classes.js"
 import {validateTitle, validateIdFromObject, validateDeadline, validateIsDone} from "./validate.js"
 import {DATA_FILE, CATEGORIES, CategoryNames, PRIORITIES, PRIORITIESNames} from "./constants.js"
+import { today } from "./base_functions.js";
 
 
 /*
@@ -90,4 +91,25 @@ export function addTask(Tasks,newId)
         
     }
 
+}
+
+
+/*
+    Красиво выводит одну задачу в консоль с форматированием и индикатором статуса
+    @task       (Object)      ---  Объект задачи
+    @returns    (void)
+*/
+export function showTask(task)
+{
+    console.log(`[ID: ${task.id}] ${task.title}`);
+    console.log(`     Статус: ${task.isDone ? "Сделано" : "В процессе"} | Категория: ${CategoryNames[task.category] ?? "Не указана"} | Приоритет: ${PRIORITIESNames[task.priority] ?? "—"} | Дедлайн: ${task.isOverdue() ? "Просрочена" : "Не просрочена"}`);
+}
+
+
+export function showAllTasks(tasks, onlyActive = false)
+{
+    for(let i = 0; i < tasks.length; i++)
+    {
+        showTask(tasks[i]);
+    }
 }
