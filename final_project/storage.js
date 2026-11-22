@@ -19,7 +19,7 @@ export function loadFromJson()
     }
 }
 
-export function saveToJson(tasks,DATA_FILE)
+export function saveToJson(tasks)
 {
     fs.writeFileSync(DATA_FILE,JSON.stringify(tasks, null,2));
 }

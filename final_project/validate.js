@@ -76,7 +76,7 @@ export function validateDeadline(raw) {
         throw new ValidationError("Указана некорректная календарная дата");
     }
 
-    if (date < today()) {
+    if (s < today()) {
         throw new ValidationError("Дедлайн не может быть в прошлом!");
     }
 
@@ -97,14 +97,14 @@ export function validateIsDone(raw)
 
     const s = String(raw).trim().toLowerCase(); 
 
-    if(s === "" || raw === null || raw === undefined)
+    if(raw === null || raw === undefined)
     {
         throw new ValidationError("Такой вариант не принимается");
     }
 
     const trueValues = ["да", "д", "yes", "y", "так", "т", "1", "+"];   //Варианты какие считаются за "ДА"
 
-    const falseValues = ["нет", "н", "no", "n", "ні", "0", "-"];        //Варианты какие считаются за "НЕТ"
+    const falseValues = ["нет", "н", "no", "n", "ні", "0", "-", ""];        //Варианты какие считаются за "НЕТ"
 
     if(trueValues.includes(s))
     {

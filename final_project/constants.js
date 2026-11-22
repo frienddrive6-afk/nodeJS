@@ -1,6 +1,6 @@
 export const DATA_FILE = "tasks.json"; // Тут будут сохранятся задачи пользователя что бы не потерять их после закрытия программы
 
-const dateRegex = new RegExp("^\\d{4}-\\d{2}-\\d{2}$");
+export const dateRegex = new RegExp("^\\d{4}-\\d{2}-\\d{2}$");
 
 // этот константный обьект нужен для того что бы описать существующие категории и удобо работать с ними
 export const CATEGORIES = Object.freeze
