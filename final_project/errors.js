@@ -1,18 +1,18 @@
 
 export class ValidationError extends Error
 {
-    constructor(mes)
+    constructor(message)
     {
-        super(mes);
+        super(message);
         this.name = "ValidationError";
     }
 }
 
 export class NotFoundError extends Error 
 {
-    constructor(mes) 
+    constructor(message) 
     {
-        super(mes);
+        super(message);
         this.name = "NotFoundError";
     }
 }

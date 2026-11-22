@@ -1,7 +1,7 @@
-import {DATA_FILE, CATEGORIES, CategoryNames, PRIORITES, PrioritesNames} from "./constants.js"
+import {DATA_FILE, CATEGORIES, CategoryNames, PRIORITIES, PRIORITIESNames} from "./constants.js"
 import { ValidationError } from "./errors.js"
 import { today } from "./base_functions.js";
-
+import {dateRegex} from "./constants.js"
 
 /*
     Валидирует заголовок задачи
@@ -40,10 +40,10 @@ export function validateIdFromObject(raw, type)
 {
     const num = Number(raw);
 
-    const arr = Object.values(type);
-    if(!raw || Number.isNaN(num) || !arr.includes(num))
+    const allowedIds = Object.values(type);
+    if(!raw || Number.isNaN(num) || !allowedIds.includes(num))
     {
-        throw new ValidationError(`Допускаются только ${arr} значения`);
+        throw new ValidationError(`Допускаются только ${allowedIds} значения`);
     }
 
     return num;
@@ -62,18 +62,21 @@ export function validateDeadline(raw) {
 
     const s = String(raw).trim();
 
-    const dateRegex = new RegExp("^\\d{4}-\\d{2}-\\d{2}$");
-
     if (!dateRegex.test(s)) {
         throw new ValidationError("Неверный формат даты! Введите дату в формате: ГГГГ-ММ-ДД (например, 2026-12-31)");
     }
 
-    const date = new Date(s);
-    if (Number.isNaN(date.getTime())) {
+    const [y, m, d] = s.split("-").map(Number);
+    const date = new Date(y, m - 1, d);
+    if (
+        date.getFullYear() !== y ||
+        date.getMonth() !== m - 1 ||
+        date.getDate() !== d
+    ) {
         throw new ValidationError("Указана некорректная календарная дата");
     }
 
-    if (s < today()) {
+    if (date < today()) {
         throw new ValidationError("Дедлайн не может быть в прошлом!");
     }
 
@@ -88,11 +91,11 @@ export function validateDeadline(raw) {
 */
 export function validateIsDone(raw)
 {
-    const s = String(raw).trim().toLowerCase();
-
     if (typeof raw === "boolean") {
         return raw;
     }
+
+    const s = String(raw).trim().toLowerCase(); 
 
     if(s === "" || raw === null || raw === undefined)
     {

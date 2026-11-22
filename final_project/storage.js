@@ -1,6 +1,7 @@
 import fs from 'fs';
+import { DATA_FILE } from "./constants.js";
 
-export function loadFromJson(DATA_FILE)
+export function loadFromJson()
 {
     if(!fs.existsSync(DATA_FILE))
     {

@@ -6,7 +6,7 @@ export class Task
   id;           //number, уникальный айди для каждой задачи
   title;        //string, название
   category;     //CATEGORIES, к какой категории принадлежит
-  priority;     //PRIORITES, на сколько срочно его нужно сделать
+  priority;     //PRIORITIES, на сколько срочно его нужно сделать
   deadline;     //string, дата ко какой нужно сделать задачу
   isDone;       //bool, выполнено да/нет
   createdAt;    //string, дата создания
