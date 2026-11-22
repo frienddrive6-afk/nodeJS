@@ -1,6 +1,6 @@
 import {DATA_FILE, CATEGORIES, CategoryNames, PRIORITES, PrioritesNames} from "./constants.js"
 import { ValidationError } from "./errors.js"
-import { today } from "./base_funtions.js";
+import { today } from "./base_functions.js";
 
 
 /*
@@ -36,14 +36,14 @@ export function validateTitle(raw)
     @type           (object)    ---  Объект категорий
     @returns        (number)    ---  Валидная категория задачи
 */
-export function valideteCarPror(raw, type)
+export function validateIdFromObject(raw, type)
 {
     const num = Number(raw);
 
     const arr = Object.values(type);
     if(!raw || Number.isNaN(num) || !arr.includes(num))
     {
-        throw new ValidationError(`Допускаются только ${arr} категории`);
+        throw new ValidationError(`Допускаются только ${arr} значения`);
     }
 
     return num;
