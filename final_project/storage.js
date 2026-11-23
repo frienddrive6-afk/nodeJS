@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { DATA_FILE } from "./constants.js";
+import {Task, createIdCounter} from "./classes.js"
 
 export function loadFromJson()
 {
@@ -10,8 +11,15 @@ export function loadFromJson()
 
     try 
     {
-        const raw = fs.readFileSync(DATA_FILE, "utf-8");
-        return JSON.parse(raw);    
+        const jsonString = fs.readFileSync(DATA_FILE, "utf-8");
+
+        if (!jsonString.trim()) {
+            return [];
+        }
+
+        const raw = JSON.parse(jsonString);
+
+        return raw.map(obj => Object.assign(Object.create(Task.prototype), obj)); 
     } catch (error) 
     {
         console.error(error);

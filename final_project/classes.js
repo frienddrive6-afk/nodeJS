@@ -13,13 +13,13 @@ export class Task
 
     constructor(id,title,category, priority, deadline = null, isDone = false)
     {
-        this.id = id,
-        this.title = title,
-        this.category = category,
-        this.priority = priority,
-        this.deadline = deadline,
-        this.isDone = isDone,
-        this.createdAt = today()
+        this.id = id;
+        this.title = title;
+        this.category = category;
+        this.priority = priority;
+        this.deadline = deadline;
+        this.isDone = isDone;
+        this.createdAt = today();
     }
 
     // метод переводящий обьект в статус выполенного

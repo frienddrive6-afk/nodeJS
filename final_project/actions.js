@@ -3,7 +3,8 @@ import {Task, createIdCounter} from "./classes.js"
 import {validateTitle, validateIdFromObject, validateDeadline, validateIsDone} from "./validate.js"
 import {DATA_FILE, CATEGORIES, CategoryNames, PRIORITIES, PRIORITIESNames} from "./constants.js"
 import { today } from "./base_functions.js";
-
+import { loadFromJson, saveToJson } from './storage.js';
+import { ValidationError } from "./errors.js";
 
 /*
     Запрашивает и валидирует заголовок задачи
@@ -76,17 +77,18 @@ function getIsDone()
     @newId      (Function)    ---  Функция-генератор уникального ID
     @returns    (void)
 */
-export function addTask(Tasks,newId)
+export function addTask(tasks,newId)
 {
     while(true)
     {
         try 
         {   
-            Tasks.push(new Task(newId(),getTitle(),getCategory(),getPriority(),getDeadline(),getIsDone()));
+            tasks.push(new Task(newId(),getTitle(),getCategory(),getPriority(),getDeadline(),getIsDone()));
+            saveToJson(tasks);
             break;
         } catch (error) 
         {
-            console.log(error);
+            console.log(error.message);
         }
         
     }
@@ -113,20 +115,21 @@ export function showTask(task)
     @onlyActive     (boolean)     ---  Флаг: отображать только невыполненные задачи (по умолчанию false)
     @returns        (void)
 */
-export function showAllTasks(tasks, onlyActive = false)
+export function showAllTasks(tasks, onlyActive = false) 
 {
-
-    for(let i = 0; i < tasks.length; i++)
+    if (tasks.length === 0) 
     {
-        if(onlyActive === true && tasks[i].isDone === true)
+        console.log("список пустой");
+        return;
+    }
+    tasks.forEach(task => 
+    {
+        if (onlyActive === true && task.isDone === true) 
         {
-            continue;
-        }else
-        {
-            showTask(tasks[i]);
+            return;
         }
-        
-    }   
+        showTask(task);
+    });
 }
 
 
@@ -137,15 +140,14 @@ export function showAllTasks(tasks, onlyActive = false)
 */
 export function searchByTitle(tasks)
 {
-    const findTitle = readlineSync.question("Слово из задачи: ").trim().toLocaleLowerCase();
+    const findTitle = normalize(readlineSync.question("Слово из задачи: ").trim().toLocaleLowerCase());
 
-    if(!findTitle === "")
+    if(findTitle === "")
     {
-        console.log("Пустая строка не допускается");
-        return [];
+        throw new ValidationError("Поисковый запрос не может быть пустым");
     }
 
-    const res = tasks.filter(task => task.title.toLocaleLowerCase().includes(findTitle));
+    const res = tasks.filter(task => normalize(task.title).includes(findTitle));
 
     if(res.length === 0)
     {
@@ -168,6 +170,7 @@ export function topByPriority(tasks, n = 3)
 {
     return tasks
         .filter(task => task.isDone === false)
+        .slice() 
         .sort((a,b) => 
             {
                 if(b.priority !== a.priority)
@@ -190,25 +193,31 @@ export function topByPriority(tasks, n = 3)
 }
 
 
-export function reportByCategory(tasks)
-{
-    const made = tasks.filter(task => task.isDone === true);
-    const active = tasks.filter(task => task.isDone === false);
 
-    return {made: made,active: active};
+export function reportByCategory(tasks) {
+    return tasks.reduce((acc, task) => {
+        if (!acc[task.category]) {
+            acc[task.category] = { total: 0, done: 0, active: 0 };
+        }
+        acc[task.category].total += 1;
+        if (task.isDone === true) {
+            acc[task.category].done += 1;
+        } else {
+            acc[task.category].active += 1;
+        }
+        return acc;
+    }, {});
 }
 
-export function showReportByCategory(obj)
-{
-    console.log("Незавершоные задачи: ");
-    showAllTasks(obj.active);
-
-    console.log("--------------")
-
-    console.log("Завершоные задачи");
-    showAllTasks(obj.made);
+export function showReportByCategory(report) {
+    if (Object.keys(report).length === 0) {
+        console.log("Пустой список");
+        return;
+    }
+    Object.entries(report).forEach(([catId, stats]) => {
+        console.log(`${CategoryNames[catId]}: всего ${stats.total}, сделано ${stats.done}, активно ${stats.active}`);
+    });
 }
-
 
 
 
@@ -245,22 +254,32 @@ export function markDone(tasks) {
 }
 
 
-export function delateTask(tasks)
+export function deleteTask(tasks)
 {
-    const UserInputId = Number(readlineSync.question("Введите id задачи котрую хотите удалить(enter/ -1 выход): ").trim());
+    const rawInput = readlineSync
+        .question("Введите id задачи, которую хотите удалить (Enter / -1 — выход): ")
+        .trim();
 
-    if((UserInputId === 0 || UserInputId === -1) && Number.isNaN(userInputId) !== true)
-    {
+        if (rawInput === "" || rawInput === "-1") {
         return;
     }
 
-    const index = tasks.findIndex(t => t.id === UserInputId);
+    const userInputId = Number(rawInput);
 
-    if(task === -1)
+    if (Number.isNaN(userInputId)) {
+        console.log("Ошибка: ID должен быть числом.");
+        return;
+    }
+
+    const index = tasks.findIndex(t => t.id === userInputId);
+
+    if(index === -1)
     {
-        console.log("Задача " + UserInputId +" не найдена");
+        console.log("Задача " + userInputId +" не найдена");
+        return;
     }
 
     tasks.splice(index, 1);
+    saveToJson(tasks);
     console.log("Успешно");
 }

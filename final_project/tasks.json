@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "title": "Подготовить отчет по проекту",
+    "category": 1,
+    "priority": 3,
+    "deadline": "2026-11-20",
+    "isDone": false,
+    "createdAt": "2026-11-23"
+  },
+  {
+    "id": 2,
+    "title": "Сдать лабораторную работу по Node.js",
+    "category": 2,
+    "priority": 3,
+    "deadline": "2026-11-25",
+    "isDone": false,
+    "createdAt": "2026-11-23"
+  },
+  {
+    "id": 3,
+    "title": "Купить продукты на неделю",
+    "category": 3,
+    "priority": 1,
+    "deadline": null,
+    "isDone": false,
+    "createdAt": "2026-11-23"
+  },
+  {
+    "id": 4,
+    "title": "Прочитать книгу по паттернам проектирования",
+    "category": 4,
+    "priority": 2,
+    "deadline": "2026-12-15",
+    "isDone": false,
+    "createdAt": "2026-11-23"
+  },
+  {
+    "id": 5,
+    "title": "Починить кран на кухне",
+    "category": 3,
+    "priority": 2,
+    "deadline": "2026-11-18",
+    "isDone": true,
+    "createdAt": "2026-11-23"
+  },
+  {
+    "id": 6,
+    "title": "Пройти техническое собеседование",
+    "category": 1,
+    "priority": 3,
+    "deadline": "2026-11-21",
+    "isDone": true,
+    "createdAt": "2026-11-23"
+  },
+  {
+    "id": 7,
+    "title": "Сделать генеральную уборку",
+    "category": 3,
+    "priority": 1,
+    "deadline": "2026-11-28",
+    "isDone": false,
+    "createdAt": "2026-11-23"
+  },
+  {
+    "id": 8,
+    "title": "Записаться на курс по базам данных",
+    "category": 2,
+    "priority": 2,
+    "deadline": null,
+    "isDone": false,
+    "createdAt": "2026-11-23"
+  },
+  {
+    "id": 9,
+    "title": "Оплатить счета за коммунальные услуги",
+    "category": 3,
+    "priority": 3,
+    "deadline": "2026-11-15",
+    "isDone": false,
+    "createdAt": "2026-11-23"
+  },
+  {
+    "id": 10,
+    "title": "Сходить на вечернюю тренировку",
+    "category": 4,
+    "priority": 1,
+    "deadline": "2026-11-22",
+    "isDone": true,
+    "createdAt": "2026-11-23"
+  }
+]

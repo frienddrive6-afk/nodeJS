@@ -1,4 +1,3 @@
-import {DATA_FILE, CATEGORIES, CategoryNames, PRIORITIES, PRIORITIESNames} from "./constants.js"
 import { ValidationError } from "./errors.js"
 import { today } from "./base_functions.js";
 import {dateRegex} from "./constants.js"
@@ -102,9 +101,14 @@ export function validateIsDone(raw)
         throw new ValidationError("Такой вариант не принимается");
     }
 
+    if (s === "") 
+    {
+        return false;
+    } 
+
     const trueValues = ["да", "д", "yes", "y", "так", "т", "1", "+"];   //Варианты какие считаются за "ДА"
 
-    const falseValues = ["нет", "н", "no", "n", "ні", "0", "-", ""];        //Варианты какие считаются за "НЕТ"
+    const falseValues = ["нет", "н", "no", "n", "ні", "0", "-"];        //Варианты какие считаются за "НЕТ"
 
     if(trueValues.includes(s))
     {
