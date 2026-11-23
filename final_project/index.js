@@ -9,8 +9,6 @@ import {validateTitle, validateIdFromObject, validateDeadline, validateIsDone} f
 import {addTask, showAllTasks, showTask} from "./actions.js"
 
 
-
-// Тестовый массив с 10 разнообразными задачами для проверки методов фильтрации, сортировки и т.д.
 const tasks = [
     new Task(1, "Подготовить отчет по проекту", CATEGORIES.WORK, PRIORITIES.HIGH, "2026-11-20", false),
     new Task(2, "Сдать лабораторную работу по Node.js", CATEGORIES.STUDY, PRIORITIES.HIGH, "2026-11-25", false),
@@ -28,6 +26,6 @@ console.log(tasks);
 // console.log(tasks[0]);
 console.log("------------");
 // showTask(tasks[0]);
-showAllTasks(tasks);
+showAllTasks(tasks, true);
 
 

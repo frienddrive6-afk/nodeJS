@@ -106,10 +106,19 @@ export function showTask(task)
 }
 
 
+
 export function showAllTasks(tasks, onlyActive = false)
 {
+
     for(let i = 0; i < tasks.length; i++)
     {
-        showTask(tasks[i]);
-    }
+        if(onlyActive === true && tasks[i].isDone === true)
+        {
+            continue;
+        }else
+        {
+            showTask(tasks[i]);
+        }
+        
+    }   
 }
