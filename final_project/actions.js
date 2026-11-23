@@ -169,16 +169,8 @@ export function topByPriority(tasks, n = 3)
                 if(!a.deadline) return 1;
                 if(!b.deadline) return -1;
 
-                if(new Date(a.deadline).getTime() > new Date(b.deadline).getTime())
-                {
-                    return 1;
-                }else if(new Date(a.deadline).getTime() <  new Date(b.deadline).getTime())
-                {
-                    return -1;
-                }else
-                {
-                    return 0;
-                }
+                return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
+
             })
         .slice(0, n);
 }
