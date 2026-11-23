@@ -107,6 +107,12 @@ export function showTask(task)
 
 
 
+/*
+    Выводит список задач в консоль с возможностью фильтрации по активным
+    @tasks          (Array)       ---  Массив задач для отображения
+    @onlyActive     (boolean)     ---  Флаг: отображать только невыполненные задачи (по умолчанию false)
+    @returns        (void)
+*/
 export function showAllTasks(tasks, onlyActive = false)
 {
 
@@ -124,6 +130,11 @@ export function showAllTasks(tasks, onlyActive = false)
 }
 
 
+/*
+    Ищет задачи по ключевому слову в названии и выводит результаты
+    @tasks      (Array)       ---  Массив задач для поиска
+    @returns    (Array)       ---  Массив найденных задач
+*/
 export function searchByTitle(tasks)
 {
     const findTitle = readlineSync.question("Слово из задачи: ").trim().toLocaleLowerCase();
@@ -139,9 +150,6 @@ export function searchByTitle(tasks)
     if(res.length === 0)
     {
         console.log("По вашему запросу ничего нинайдено");
-    }else
-    {
-        showAllTasks(res);
     }
 
     return res;
@@ -150,6 +158,12 @@ export function searchByTitle(tasks)
 
 
 
+/*
+    Возвращает топ N невыполненных задач, отсортированных по приоритету и дедлайну
+    @tasks      (Array)       ---  Массив задач
+    @n          (number)      ---  Количество задач в топе (по умолчанию 3)
+    @returns    (Array)       ---  Массив наиболее приоритетных задач
+*/
 export function topByPriority(tasks, n = 3)
 {
     return tasks
@@ -173,4 +187,80 @@ export function topByPriority(tasks, n = 3)
 
             })
         .slice(0, n);
+}
+
+
+export function reportByCategory(tasks)
+{
+    const made = tasks.filter(task => task.isDone === true);
+    const active = tasks.filter(task => task.isDone === false);
+
+    return {made: made,active: active};
+}
+
+export function showReportByCategory(obj)
+{
+    console.log("Незавершоные задачи: ");
+    showAllTasks(obj.active);
+
+    console.log("--------------")
+
+    console.log("Завершоные задачи");
+    showAllTasks(obj.made);
+}
+
+
+
+
+export function markDone(tasks) {
+    const rawInput = readlineSync
+        .question("Введите id задачи, которую хотите пометить как выполненную (Enter / -1 — выход): ")
+        .trim();
+
+        if (rawInput === "" || rawInput === "-1") {
+        return;
+    }
+
+    const userInputId = Number(rawInput);
+
+    if (Number.isNaN(userInputId)) {
+        console.log("Ошибка: ID должен быть числом.");
+        return;
+    }
+
+    const task = tasks.find(t => t.id === userInputId);
+
+    if (task === undefined) {
+        console.log(`Задача ${userInputId} не найдена.`);
+        return;
+    }
+
+    if (task.isDone === true) {
+        console.log(`Задача ${userInputId} уже выполнена.`);
+        return;
+    }
+
+    task.taskDone();
+    console.log(`Задача ${userInputId} помечена как выполненная.`);
+}
+
+
+export function delateTask(tasks)
+{
+    const UserInputId = Number(readlineSync.question("Введите id задачи котрую хотите удалить(enter/ -1 выход): ").trim());
+
+    if((UserInputId === 0 || UserInputId === -1) && Number.isNaN(userInputId) !== true)
+    {
+        return;
+    }
+
+    const index = tasks.findIndex(t => t.id === UserInputId);
+
+    if(task === -1)
+    {
+        console.log("Задача " + UserInputId +" не найдена");
+    }
+
+    tasks.splice(index, 1);
+    console.log("Успешно");
 }

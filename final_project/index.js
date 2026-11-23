@@ -6,7 +6,7 @@ import {today, normalize, formatTask} from "./base_functions.js"
 import {Task, createIdCounter} from "./classes.js"
 import {DATA_FILE, CATEGORIES, CategoryNames, PRIORITIES, PRIORITIESNames} from "./constants.js"
 import {validateTitle, validateIdFromObject, validateDeadline, validateIsDone} from "./validate.js"
-import {addTask, showAllTasks, showTask, searchByTitle, topByPriority} from "./actions.js"
+import {addTask, showAllTasks, showTask, searchByTitle, topByPriority, showReportByCategory, reportByCategory,markDone} from "./actions.js"
 
 
 const tasks = [
@@ -28,8 +28,13 @@ const tasks = [
 // showTask(tasks[0]);
 // showAllTasks(tasks, true);
 
-// searchByTitle(tasks);
+// showAllTasks(searchByTitle(tasks));
 
-showAllTasks(topByPriority(tasks));
+// showAllTasks(topByPriority(tasks));
+
+// showReportByCategory(reportByCategory(tasks));
+console.log(tasks[3].isDone)
+markDone(tasks);
+console.log(tasks[3].isDone)
 
 
