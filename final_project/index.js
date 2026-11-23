@@ -6,7 +6,7 @@ import {today, normalize, formatTask} from "./base_functions.js"
 import {Task, createIdCounter} from "./classes.js"
 import {DATA_FILE, CATEGORIES, CategoryNames, PRIORITIES, PRIORITIESNames} from "./constants.js"
 import {validateTitle, validateIdFromObject, validateDeadline, validateIsDone} from "./validate.js"
-import {addTask, showAllTasks, showTask} from "./actions.js"
+import {addTask, showAllTasks, showTask, searchByTitle, topByPriority} from "./actions.js"
 
 
 const tasks = [
@@ -22,10 +22,14 @@ const tasks = [
     new Task(10, "Сходить на вечернюю тренировку", CATEGORIES.PERSONAL, PRIORITIES.LOW, "2026-11-22", true)
 ];
 
-console.log(tasks);
+// console.log(tasks);
 // console.log(tasks[0]);
-console.log("------------");
+// console.log("------------");
 // showTask(tasks[0]);
-showAllTasks(tasks, true);
+// showAllTasks(tasks, true);
+
+// searchByTitle(tasks);
+
+showAllTasks(topByPriority(tasks));
 
 

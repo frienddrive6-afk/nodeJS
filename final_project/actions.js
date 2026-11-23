@@ -122,3 +122,63 @@ export function showAllTasks(tasks, onlyActive = false)
         
     }   
 }
+
+
+export function searchByTitle(tasks)
+{
+    const findTitle = readlineSync.question("Слово из задачи: ").trim().toLocaleLowerCase();
+
+    if(!findTitle === "")
+    {
+        console.log("Пустая строка не допускается");
+        return [];
+    }
+
+    const res = tasks.filter(task => task.title.toLocaleLowerCase().includes(findTitle));
+
+    if(res.length === 0)
+    {
+        console.log("По вашему запросу ничего нинайдено");
+    }else
+    {
+        showAllTasks(res);
+    }
+
+    return res;
+
+}
+
+
+
+export function topByPriority(tasks, n = 3)
+{
+    return tasks
+        .filter(task => task.isDone === false)
+        .sort((a,b) => 
+            {
+                if(b.priority !== a.priority)
+                {
+                    return b.priority - a.priority;
+                }
+
+                if(!a.deadline && !b.deadline)
+                {
+                    return 0;
+                }
+
+                if(!a.deadline) return 1;
+                if(!b.deadline) return -1;
+
+                if(new Date(a.deadline).getTime() > new Date(b.deadline).getTime())
+                {
+                    return 1;
+                }else if(new Date(a.deadline).getTime() <  new Date(b.deadline).getTime())
+                {
+                    return -1;
+                }else
+                {
+                    return 0;
+                }
+            })
+        .slice(0, n);
+}
