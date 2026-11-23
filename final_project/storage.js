@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { DATA_FILE } from "./constants.js";
-import {Task, createIdCounter} from "./classes.js"
+import {Task} from "./classes.js"
 
 export function loadFromJson()
 {

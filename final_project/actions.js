@@ -1,9 +1,9 @@
 import readlineSync from 'readline-sync';
-import {Task, createIdCounter} from "./classes.js"
+import {Task} from "./classes.js"
 import {validateTitle, validateIdFromObject, validateDeadline, validateIsDone} from "./validate.js"
-import {DATA_FILE, CATEGORIES, CategoryNames, PRIORITIES, PRIORITIESNames} from "./constants.js"
-import { today } from "./base_functions.js";
-import { loadFromJson, saveToJson } from './storage.js';
+import { CATEGORIES, CategoryNames, PRIORITIES, PRIORITIESNames} from "./constants.js"
+import { normalize } from "./base_functions.js";
+import { saveToJson } from './storage.js';
 import { ValidationError } from "./errors.js";
 
 /*
@@ -140,7 +140,7 @@ export function showAllTasks(tasks, onlyActive = false)
 */
 export function searchByTitle(tasks)
 {
-    const findTitle = normalize(readlineSync.question("Слово из задачи: ").trim().toLocaleLowerCase());
+    const findTitle = normalize(readlineSync.question("Слово из задачи: "));
 
     if(findTitle === "")
     {
