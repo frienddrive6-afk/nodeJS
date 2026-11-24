@@ -11,19 +11,19 @@ export function validateTitle(raw)
 {
     if(!raw || typeof raw !==  "string")
     {
-        throw new ValidationError("обязательное поле для заполнения");
+        throw new ValidationError("обов’язкове поле для заповнення");
     }
 
     const trimed = raw.trim();
 
     if(trimed.length < 2)
     {
-        throw new ValidationError("минимальная длина 2 символа");
+        throw new ValidationError("мінімальна довжина  2 символи");
     }
 
     if(trimed.length > 100)
     {
-        throw new ValidationError("Максимальная длина не может привышать 100 символов");
+        throw new ValidationError("Максимальна довжина не може перевищувати 100 символів");
     }
 
     return trimed;
@@ -42,7 +42,7 @@ export function validateIdFromObject(raw, type)
     const allowedIds = Object.values(type);
     if(!raw || Number.isNaN(num) || !allowedIds.includes(num))
     {
-        throw new ValidationError(`Допускаются только ${allowedIds} значения`);
+        throw new ValidationError(`Допускаються лише ${allowedIds} значення`);
     }
 
     return num;
@@ -62,7 +62,7 @@ export function validateDeadline(raw) {
     const s = String(raw).trim();
 
     if (!dateRegex.test(s)) {
-        throw new ValidationError("Неверный формат даты! Введите дату в формате: ГГГГ-ММ-ДД (например, 2026-12-31)");
+        throw new ValidationError("Неправильний формат дати! Введіть дату у форматі: РРРР-ММ-ДД (наприклад, 2026-12-31)");
     }
 
     const [y, m, d] = s.split("-").map(Number);
@@ -72,11 +72,11 @@ export function validateDeadline(raw) {
         date.getMonth() !== m - 1 ||
         date.getDate() !== d
     ) {
-        throw new ValidationError("Указана некорректная календарная дата");
+        throw new ValidationError("Вказано неправильну календарну дату");
     }
 
     if (s < today()) {
-        throw new ValidationError("Дедлайн не может быть в прошлом!");
+        throw new ValidationError("Термін не може бути в минулому!");
     }
 
     return s;
@@ -98,7 +98,7 @@ export function validateIsDone(raw)
 
     if(raw === null || raw === undefined)
     {
-        throw new ValidationError("Такой вариант не принимается");
+        throw new ValidationError("Такий варіант не приймається");
     }
 
     if (s === "") 
@@ -118,7 +118,7 @@ export function validateIsDone(raw)
         return false;
     }
     
-    throw new ValidationError("Некорректный ввод. Ожидается: да/нет (yes/no, 1/0).");
+    throw new ValidationError("Неправильний ввід. Очікується: так/ні (yes/no, 1/0).");
     
 }
 

@@ -12,7 +12,7 @@ import { ValidationError } from "./errors.js";
 */
 function getTitle()
 {
-    return validateTitle(readlineSync.question("Введите задачу которую нужно сделать: "));
+    return validateTitle(readlineSync.question("Введіть завдання, яке потрібно виконати: "));
 }
 
 /*
@@ -28,7 +28,7 @@ function getCategory()
         
     return validateIdFromObject
     (
-        readlineSync.question(`Категория (1-${Object.keys(CATEGORIES).length}): `),
+        readlineSync.question(`Категорія (1-${Object.keys(CATEGORIES).length}): `),
         CATEGORIES
     );
     
@@ -47,7 +47,7 @@ function getPriority()
     
     return validateIdFromObject
     (
-        readlineSync.question(`Приоритет (1-${Object.keys(PRIORITIES).length}): `),
+        readlineSync.question(`Пріоритет (1-${Object.keys(PRIORITIES).length}): `),
         PRIORITIES
     );
     
@@ -59,7 +59,7 @@ function getPriority()
 */
 function getDeadline()
 {
-    return validateDeadline(readlineSync.question("Вевдите дату до которой хотите сделать задачу(пример 2026-11-21): "));
+    return validateDeadline(readlineSync.question("Введіть дату, до якої хочете виконати завдання (наприклад, 21.11.2026): "));
 }
 
 /*
@@ -68,7 +68,7 @@ function getDeadline()
 */
 function getIsDone()
 {
-    return validateIsDone(readlineSync.question("Вы уже сделали эту задачу? (да/нет) если нажмете enter зачистаентся как 'нет': "));
+    return validateIsDone(readlineSync.question("Ви вже виконали це завдання? (так/ні) Якщо натиснете Enter, відповідь буде зарахована як «ні»: "));
 }
 
 /*
@@ -104,7 +104,7 @@ export function addTask(tasks,newId)
 export function showTask(task)
 {
     console.log(`[ID: ${task.id}] ${task.title}`);
-    console.log(`     Статус: ${task.isDone ? "Сделано" : "В процессе"} | Категория: ${CategoryNames[task.category] ?? "Не указана"} | Приоритет: ${PRIORITIESNames[task.priority] ?? "—"} | Дедлайн: ${task.isOverdue() ? "Просрочена" : "Не просрочена"}`);
+    console.log(`     Статус: ${task.isDone ? "Зроблено" : "У процесі"} | Категорія: ${CategoryNames[task.category] ?? "Не вказано"} | Пріоритет: ${PRIORITIESNames[task.priority] ?? "—"} | Кінцевий термін: ${task.isOverdue() ? "Прострочена" : "Не прострочена"}`);
 }
 
 
@@ -119,7 +119,7 @@ export function showAllTasks(tasks, onlyActive = false)
 {
     if (tasks.length === 0) 
     {
-        console.log("список пустой");
+        console.log("список порожній");
         return;
     }
     tasks.forEach(task => 
@@ -140,18 +140,18 @@ export function showAllTasks(tasks, onlyActive = false)
 */
 export function searchByTitle(tasks)
 {
-    const findTitle = normalize(readlineSync.question("Слово из задачи: "));
+    const findTitle = normalize(readlineSync.question("Слово із задачі: "));
 
     if(findTitle === "")
     {
-        throw new ValidationError("Поисковый запрос не может быть пустым");
+        throw new ValidationError("Пошуковий запит не може бути порожнім");
     }
 
     const res = tasks.filter(task => normalize(task.title).includes(findTitle));
 
     if(res.length === 0)
     {
-        console.log("По вашему запросу ничего нинайдено");
+        console.log("За вашим запитом нічого не знайдено");
     }
 
     return res;
@@ -211,11 +211,11 @@ export function reportByCategory(tasks) {
 
 export function showReportByCategory(report) {
     if (Object.keys(report).length === 0) {
-        console.log("Пустой список");
+        console.log("Порожній список");
         return;
     }
     Object.entries(report).forEach(([catId, stats]) => {
-        console.log(`${CategoryNames[catId]}: всего ${stats.total}, сделано ${stats.done}, активно ${stats.active}`);
+        console.log(`${CategoryNames[catId]}: всього ${stats.total}, зроблено ${stats.done}, активно ${stats.active}`);
     });
 }
 
@@ -223,7 +223,7 @@ export function showReportByCategory(report) {
 
 export function markDone(tasks) {
     const rawInput = readlineSync
-        .question("Введите id задачи, которую хотите пометить как выполненную (Enter / -1 — выход): ")
+        .question("Введіть id завдання, яке ви хочете позначити як виконане (Enter / -1 — вихід): ")
         .trim();
 
         if (rawInput === "" || rawInput === "-1") {
@@ -233,31 +233,31 @@ export function markDone(tasks) {
     const userInputId = Number(rawInput);
 
     if (Number.isNaN(userInputId)) {
-        console.log("Ошибка: ID должен быть числом.");
+        console.log("Помилка: ID має бути числом.");
         return;
     }
 
     const task = tasks.find(t => t.id === userInputId);
 
     if (task === undefined) {
-        console.log(`Задача ${userInputId} не найдена.`);
+        console.log(`Завдання ${userInputId} не знайдено.`);
         return;
     }
 
     if (task.isDone === true) {
-        console.log(`Задача ${userInputId} уже выполнена.`);
+        console.log(`Завдання ${userInputId} вже виконано.`);
         return;
     }
 
     task.taskDone();
-    console.log(`Задача ${userInputId} помечена как выполненная.`);
+    console.log(`Завдання ${userInputId} позначена як виконана.`);
 }
 
 
 export function deleteTask(tasks)
 {
     const rawInput = readlineSync
-        .question("Введите id задачи, которую хотите удалить (Enter / -1 — выход): ")
+        .question("Введіть id завдання, яке ви хочете видалити (Enter / -1 — вихід): ")
         .trim();
 
         if (rawInput === "" || rawInput === "-1") {
@@ -267,7 +267,7 @@ export function deleteTask(tasks)
     const userInputId = Number(rawInput);
 
     if (Number.isNaN(userInputId)) {
-        console.log("Ошибка: ID должен быть числом.");
+        console.log("Помилка: ID має бути числом.");
         return;
     }
 
@@ -275,11 +275,11 @@ export function deleteTask(tasks)
 
     if(index === -1)
     {
-        console.log("Задача " + userInputId +" не найдена");
+        console.log("Завдання " + userInputId +" не знайдено");
         return;
     }
 
     tasks.splice(index, 1);
     saveToJson(tasks);
-    console.log("Успешно");
+    console.log("Успішно");
 }

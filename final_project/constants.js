@@ -14,10 +14,10 @@ export const CATEGORIES = Object.freeze
 // этот константный обьект разшифровка для класса, который описывает категории пользователя
 export const CategoryNames = Object.freeze
 ({
-    [CATEGORIES.WORK] : "Робота",
-    [CATEGORIES.STUDY] : "Учеба",
+    [CATEGORIES.WORK] : "Работа",
+    [CATEGORIES.STUDY] : "Навчання",
     [CATEGORIES.HOME] : "Дом",
-    [CATEGORIES.PERSONAL] : "Личное"
+    [CATEGORIES.PERSONAL] : "Особисте"
 });
 
 // константный Объект для хранения и управления приоритетами задач, позволяющий удобно работать с ними в коде
@@ -31,7 +31,7 @@ export const PRIORITIES = Object.freeze
 // этот константный обьект разшифровка для класса, который описывает приоритеты пользователя
 export const PRIORITIESNames = Object.freeze
 ({
-    [PRIORITIES.LOW] : "Низкий",
-    [PRIORITIES.MEDIUM] : "Средний",
-    [PRIORITIES.HIGH] : "Высокий"
+    [PRIORITIES.LOW] : "Низький",
+    [PRIORITIES.MEDIUM] : "Середній",
+    [PRIORITIES.HIGH] : "Високий"
 });
