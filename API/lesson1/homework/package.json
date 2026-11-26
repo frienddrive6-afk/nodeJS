@@ -1,0 +1,24 @@
+{
+
+  "name": "node-first-project",
+
+  "version": "1.0.0",
+
+  "type": "module",
+
+  "main": "index.js",
+
+  "scripts": {
+
+    "start": "node index.js"
+
+  },
+
+  "dependencies": {
+
+    "readline-sync": "^1.4.10"
+
+  }
+
+}
+
